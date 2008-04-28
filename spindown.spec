@@ -1,11 +1,13 @@
-Summary:	Spindown is a daemon to spindown idle disks
+Summary:	Daemon for spindown idle disks
 Name:		spindown
 Version:	0.1.3
 Release:	%mkrel 1
 License:	GPLv3
-Group:		System/Daemons
+Group:		System/Kernel and hardware
 URL:		http://code.google.com/p/spindown/
-Source:		http://spindown.googlecode.com/files/%{name}-%{version}.tar.bz2
+Source0:	http://spindown.googlecode.com/files/%{name}-%{version}.tar.bz2
+Source1:	%{name}-initscript
+Requires(pre):	rpm-helper
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
@@ -33,15 +35,26 @@ rm -fr %{buildroot}
 %makeinstall_std
 
 install -dm 755 %{buildroot}%{_sysconfdir}
+install -dm 755 %{buildroot}%{_initrddir}
 install -m 644 spindown.conf.example %{buildroot}%{_sysconfdir}/spindown.conf
+install -m 744 %{SOURCE1} %{buildroot}%{_initrddir}/%{name}
 
+# (tpg) really not needed
+rm -fr %{buildroot}%{_sysconfdir}/rc?.d/*%{name}
+rm -fr %{buildroot}%{_sysconfdir}/init.d/%{name}
 
 %clean
 rm -fr %{buildroot}
+
+%post
+%_post_service %{name}
+
+%preun
+%_preun_service %{name}
 
 %files
 %defattr(-,root,root)
 %doc CHANGELOG README spindown.conf.example
 %config(noreplace) %{_sysconfdir}/spindown.conf
+%{_initrddir}/%{name}
 /sbin/spindownd
-%{_sbindir}/rcspindown
