@@ -8,6 +8,7 @@ URL:		http://code.google.com/p/spindown/
 Source0:	http://spindown.googlecode.com/files/%{name}-%{version}.tar.bz2
 Source1:	%{name}-initscript
 Requires(pre):	rpm-helper
+Requires:	sg3_utils
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
@@ -26,7 +27,7 @@ daemon is running.
 %setup -q
 
 %build
-export CFLAGS="%{optflags}"
+export CFLAGS="%{optflags} -pthread"
 
 %make
 
