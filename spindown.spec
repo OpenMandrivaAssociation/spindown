@@ -1,6 +1,6 @@
 Summary:	Daemon for spindown idle disks
 Name:		spindown
-Version:	0.2
+Version:	0.2.1
 Release:	%mkrel 1
 License:	GPLv3
 Group:		System/Kernel and hardware
