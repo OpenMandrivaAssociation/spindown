@@ -59,3 +59,48 @@ rm -fr %{buildroot}
 %config(noreplace) %{_sysconfdir}/spindown.conf
 %{_initrddir}/%{name}
 /sbin/spindownd
+
+
+%changelog
+* Sat Apr 16 2011 Tomasz Pawel Gajc <tpg@mandriva.org> 0.4.0-2mdv2011.0
++ Revision: 653314
+- rebuild
+
+* Tue Jun 09 2009 Tomasz Pawel Gajc <tpg@mandriva.org> 0.4.0-1mdv2010.0
++ Revision: 384503
+- update to new version 0.4.0
+
+* Tue Feb 24 2009 Tomasz Pawel Gajc <tpg@mandriva.org> 0.3.0-1mdv2009.1
++ Revision: 344335
+- update to new version 0.3.0
+
+* Tue Sep 09 2008 Tomasz Pawel Gajc <tpg@mandriva.org> 0.2.2-1mdv2009.0
++ Revision: 283048
+- update to new version 0.2.2
+
+* Fri Aug 08 2008 Thierry Vignaud <tv@mandriva.org> 0.2.1-2mdv2009.0
++ Revision: 269345
+- rebuild early 2009.0 package (before pixel changes)
+
+* Tue Jun 03 2008 Tomasz Pawel Gajc <tpg@mandriva.org> 0.2.1-1mdv2009.0
++ Revision: 214571
+- update to new version 0.2.1
+
+* Mon May 19 2008 Tomasz Pawel Gajc <tpg@mandriva.org> 0.2-1mdv2009.0
++ Revision: 209101
+- new version
+- fix init script
+
+* Tue Apr 29 2008 Tomasz Pawel Gajc <tpg@mandriva.org> 0.1.3-2mdv2009.0
++ Revision: 198905
+- fix init script
+
+* Mon Apr 28 2008 Tomasz Pawel Gajc <tpg@mandriva.org> 0.1.3-1mdv2009.0
++ Revision: 198036
+- add requires on sg3_utils
+- tune up CFLAGS
+- add initscript
+- correct the summary
+- add source and spec files
+- Created package structure for spindown.
+
