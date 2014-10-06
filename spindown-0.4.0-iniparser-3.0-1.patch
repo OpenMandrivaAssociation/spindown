@@ -1,0 +1,54 @@
+diff --git a/src/disk.cpp b/src/disk.cpp
+index 1d72a06..731d97d 100644
+--- a/src/disk.cpp
++++ b/src/disk.cpp
+@@ -46,12 +46,12 @@ extern "C" {
+ 
+ Disk* Disk::create( dictionary& ini, string const & section)
+ {
+-    string id      = iniparser_getstring (&ini, string(section+":id").data(),       (char*)"");
+-    string name    = iniparser_getstring (&ini, string(section+":name").data(),     (char*)"");
+-    bool sd        = iniparser_getboolean(&ini, string(section+":spindown").data(), 0);
+-    string command = iniparser_getstring (&ini, string(section+":command").data(),  (char*)"sg_start --stop");
+-    int sgTime     = iniparser_getint (&ini, string(section+":idle-time").data(), 0);
+-    bool repeat    = iniparser_getboolean(&ini, string(section+":repeat").data(), 0);
++    string id      = iniparser_getstring (&ini, (char*)string(section+":id").data(),       (char*)"");
++    string name    = iniparser_getstring (&ini, (char*)string(section+":name").data(),     (char*)"");
++    bool sd        = iniparser_getboolean(&ini, (char*)string(section+":spindown").data(), 0);
++    string command = iniparser_getstring (&ini, (char*)string(section+":command").data(),  (char*)"sg_start --stop");
++    int sgTime     = iniparser_getint (&ini, (char*)string(section+":idle-time").data(), 0);
++    bool repeat    = iniparser_getboolean(&ini, (char*)string(section+":repeat").data(), 0);
+ 
+     Disk* newDisk = new Disk(id, name, sd, command, sgTime, repeat);
+ 
+diff --git a/src/spindownd.cpp b/src/spindownd.cpp
+index 16cc6bc..c4c50c6 100644
+--- a/src/spindownd.cpp
++++ b/src/spindownd.cpp
+@@ -235,7 +235,7 @@ void Spindownd::readConfig(string const &path)
+     }
+ 
+     // Try to open the configuration file
+-    if( (ini=iniparser_load(path.data()))==NULL )
++    if( (ini=iniparser_load((char*)path.data()))==NULL )
+     {
+         std::cerr << "Can't open the configuration file: " << path << endl;
+         exit(1);
+@@ -250,14 +250,14 @@ void Spindownd::readConfig(string const &path)
+         // General section?
+         if( section=="general" )
+         {
+-            commonSpinDownTime = iniparser_getint(ini, string(section+":idle-time").data(), 7200);
++            commonSpinDownTime = iniparser_getint(ini, (char*)string(section+":idle-time").data(), 7200);
+ 
+             if( commonSpinDownTime <= 0 )
+                 commonSpinDownTime = 7200;
+ 
+-            cycleTime = iniparser_getint(ini, string(section+":cycle-time").data(), 60);
++            cycleTime = iniparser_getint(ini, (char*)string(section+":cycle-time").data(), 60);
+ 
+-            if( iniparser_getboolean(ini, string(section+":syslog").data(), 0) )
++            if( iniparser_getboolean(ini, (char*)string(section+":syslog").data(), 0) )
+                 Log::get()->open( (char*)"spindown", LOG_NDELAY, LOG_DAEMON );
+             else
+                 Log::get()->close();

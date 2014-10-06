@@ -1,0 +1,11 @@
+[Unit]
+Description=Daemon that can spindown idle disks
+After=syslog.target
+
+[Service]
+Type=forking
+ExecStart=/usr/sbin/spindownd -d -f /var/run/spindown.status -c /etc/spindown.conf -p /var/run/spindownd.pid
+
+[Install]
+WantedBy=multi-user.target
+

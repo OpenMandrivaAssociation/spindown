@@ -1,0 +1,87 @@
+diff --git a/Makefile b/Makefile
+index 6eee8b8..f52ff30 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,18 +1,16 @@
+-SBINDIR = $(DESTDIR)/sbin
++SBINDIR = $(DESTDIR)/usr/sbin
+ ETCDIR = $(DESTDIR)/etc
++
+ VERSION = 0.4.0
+-OBJS = main.o diskset.o disk.o spindown.o iniparser.o dictionary.o log.o spindownd.o\
+-        exceptions.o
++OBJS = main.o diskset.o disk.o spindown.o log.o spindownd.o exceptions.o
+ CC = g++
+-CFLAGS =-O1
++CFLAGS = $(OPT)
+ SRC = src/
+-INPARSER = $(SRC)ininiparser3.0b/
+ SRCDIR = spindown-$(VERSION)
+ 
+ all: spindownd
+ 	@echo "---"
+ 	@echo "THE CONFIGURATION FILE HAS CHANGED SINCE V0.2.1!!!!"
+-	@echo "Please see the changelog and the example configuration file for more information."
+ 	@echo "---"
+ 
+ clean:
+@@ -20,47 +18,13 @@ clean:
+ 
+ install: all
+ 	install -D -m 755 spindownd $(SBINDIR)/spindownd
+-	install -D -m 755 spindown $(ETCDIR)/init.d/spindown
+-
+-#make the links in rc.d
+-	mkdir -p $(ETCDIR)/rc0.d
+-	mkdir -p $(ETCDIR)/rc1.d
+-	mkdir -p $(ETCDIR)/rc2.d
+-	mkdir -p $(ETCDIR)/rc3.d
+-	mkdir -p $(ETCDIR)/rc4.d
+-	mkdir -p $(ETCDIR)/rc5.d
+-	mkdir -p $(ETCDIR)/rc6.d
+-
+-	ln -s ../init.d/spindown $(ETCDIR)/rc0.d/K20spindown
+-	ln -s ../init.d/spindown $(ETCDIR)/rc1.d/K20spindown
+-	ln -s ../init.d/spindown $(ETCDIR)/rc6.d/K20spindown
+-
+-	ln -s ../init.d/spindown $(ETCDIR)/rc2.d/S20spindown
+-	ln -s ../init.d/spindown $(ETCDIR)/rc3.d/S20spindown
+-	ln -s ../init.d/spindown $(ETCDIR)/rc4.d/S20spindown
+-	ln -s ../init.d/spindown $(ETCDIR)/rc5.d/S20spindown
++	install -D -m 644 spindown.conf.example $(ETCDIR)/spindown.conf
+ 
+ uninstall:
+-	rm $(ETCDIR)/spindown.conf $(ETCDIR)/init.d/spindown $(ETCDIR)/spindownd $(ETCDIR)/rc0.d/K20spindown\
+-		$(ETCDIR)/rc1.d/K20spindown $(ETCDIR)/rc2.d/S20spindown $(ETCDIR)/rc3.d/S20spindown\
+-		$(ETCDIR)/rc4.d/S20spindown $(ETCDIR)/rc5.d/S20spindown $(ETCDIR)/rc6.d/K20spindown
+-
+-dist:
+-	mkdir -p $(SRCDIR)/src/ininiparser3.0b
+-	mkdir -p $(SRCDIR)/gentoo
+-	cp $(SRC)general.h $(SRC)main.cpp $(SRC)diskset.h $(SRC)diskset.cpp $(SRC)disk.h\
+-		$(SRC)disk.cpp $(SRC)spindown.h $(SRC)spindown.cpp $(SRC)log.h $(SRC)log.cpp\
+-                $(SRC)spindownd.h $(SRC)spindownd.cpp $(SRC)exceptions.h $(SRC)exceptions.cpp\
+-                $(SRCDIR)/$(SRC)
+-	cp $(INPARSER)iniparser.c $(INPARSER)dictionary.c $(INPARSER)iniparser.h $(INPARSER)dictionary.h\
+-		$(SRCDIR)/$(INPARSER)
+-	cp gentoo/README gentoo/rc.spindown gentoo/init.spindown $(SRCDIR)/gentoo
+-	cp CHANGELOG README COPYING TODO spindown spindown.conf.example Makefile $(SRCDIR)
+-	tar -czf $(SRCDIR).tar.gz $(SRCDIR)/*
+-	rm -d -r -f $(SRCDIR)
++	rm $(ETCDIR)/spindown.conf $(SBINDIR)/spindownd
+ 
+ spindownd: $(OBJS)
+-	g++ $(CFLAGS) -o spindownd $(OBJS)
++	g++ $(CFLAGS) -o spindownd $(OBJS) -liniparser
+ 
+ main.o: $(SRC)main.cpp $(SRC)general.h
+ 	g++ $(CFLAGS) -c $(SRC)main.cpp
+@@ -83,8 +47,3 @@ log.o: $(SRC)log.cpp $(SRC)log.h $(SRC)general.h
+ exceptions.o: $(SRC)exceptions.cpp $(SRC)exceptions.h $(SRC)general.h
+ 	g++ $(CFLAGS) -c $(SRC)exceptions.cpp
+ 
+-iniparser.o: $(INPARSER)iniparser.c
+-	g++ $(CFLAGS) -c $(INPARSER)iniparser.c
+-
+-dictionary.o: $(INPARSER)dictionary.c
+-	g++ $(CFLAGS) -c $(INPARSER)dictionary.c

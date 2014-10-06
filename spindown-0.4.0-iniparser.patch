@@ -1,0 +1,54 @@
+diff --git a/src/disk.cpp b/src/disk.cpp
+index 4ed7845..1d72a06 100644
+--- a/src/disk.cpp
++++ b/src/disk.cpp
+@@ -38,7 +38,9 @@ using std::ostringstream;
+ #include "general.h"
+ #include "log.h"
+ #include "exceptions.h"
+-#include "ininiparser3.0b/iniparser.h"
++extern "C" { 
++#include "iniparser.h" 
++}
+ 
+ #include "disk.h"
+ 
+diff --git a/src/disk.h b/src/disk.h
+index 4cc7d1e..475f281 100644
+--- a/src/disk.h
++++ b/src/disk.h
+@@ -28,7 +28,9 @@
+ #ifndef DISC_CLASS_H
+ #define DISC_CLASS_H
+ 
+-#include "ininiparser3.0b/iniparser.h"
++extern "C" {
++#include "iniparser.h"
++}
+ 
+ #include <string>
+ using std::string;
+diff --git a/src/spindownd.cpp b/src/spindownd.cpp
+index 6517b61..16cc6bc 100644
+--- a/src/spindownd.cpp
++++ b/src/spindownd.cpp
+@@ -41,8 +41,10 @@ using std::ofstream;
+ #include "diskset.h"
+ #include "spindown.h"
+ 
+-#include "ininiparser3.0b/iniparser.h"
+-#include "ininiparser3.0b/dictionary.h"
++extern "C" {
++#include "iniparser.h"
++#include "dictionary.h"
++}
+ 
+ #include "spindownd.h"
+ 
+@@ -339,4 +341,4 @@ string Spindownd::relToAbs( string path )
+         path.insert( 0, runPath+"/" );
+ 
+     return path;
+-}
+\ No newline at end of file
++}
