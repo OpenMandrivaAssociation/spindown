@@ -1,7 +1,7 @@
 Summary:    Daemon that can spin idle disks down
 Name:       spindown
 Version:    0.4.0
-Release:    4
+Release:    5
 License:    GPLv3+
 Group:      System/Servers
 Url:        http://code.google.com/p/spindown
