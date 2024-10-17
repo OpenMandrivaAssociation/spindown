@@ -4,7 +4,7 @@ Version:    0.4.0
 Release:    6
 License:    GPLv3+
 Group:      System/Servers
-Url:        http://code.google.com/p/spindown
+Url:        https://code.google.com/p/spindown
 Source0:    http://spindown.googlecode.com/files/spindown-%{version}.tar.gz
 Source1:    spindown.service
 Source2:    01spindown
