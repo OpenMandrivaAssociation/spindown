@@ -16,6 +16,7 @@ Patch3: spindown-0.4.0-bz1037334.patch
 
 Requires(preun): systemd-units
 
+BuildRequires:	make
 BuildRequires: iniparser-devel
 BuildRequires: systemd-units
 
